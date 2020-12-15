@@ -41,7 +41,12 @@ router.get('/', (req, res) => {
 module.exports = router;
 
 
-//test1
+//github test
+function addSomething(a,b){
+    return a + b;
+}
+
+addSomething(1,2);
 
 module.exports = router;
 

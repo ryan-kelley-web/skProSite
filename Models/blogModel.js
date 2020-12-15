@@ -23,17 +23,13 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         }, 
-        author: {
-            type: DataTypes.INTEGER,
+        owner: {
+            type: DataTypes.STRING,
             allowNull: false,
         },
+       
 
 
-        //STRETCH?
-        // byGuestAuthor: {
-        //     type: DataTypes.BOOLEAN,
-        //     allowNull: true,
-        // }, 
 
         //STRETCH?
         //QQQ------instead of pubDate, could I make pubDt, pubMo, pubYr, setting DataTypes as num, str, num respectively?

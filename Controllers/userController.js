@@ -15,7 +15,7 @@ router.post('/register', function (req, res) {
             password: bcrypt.hashSync(req.body.user.password, 13),
             tagline: req.body.user.tagline,
             theWhy: req.body.user.theWhy,
-            isAdmin: false,
+            isAdmin: req.body.user.isAdmin,
         }
     )
         .then(

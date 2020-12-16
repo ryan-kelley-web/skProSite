@@ -1,5 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     const Blog = sequelize.define('blog', {
+
         category: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -23,17 +24,13 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         }, 
-        author: {
+        owner: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
+       
 
 
-        //STRETCH?
-        // byGuestAuthor: {
-        //     type: DataTypes.BOOLEAN,
-        //     allowNull: true,
-        // }, 
 
         //STRETCH?
         //QQQ------instead of pubDate, could I make pubDt, pubMo, pubYr, setting DataTypes as num, str, num respectively?

@@ -1,5 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     const Blog = sequelize.define('blog', {
+
         category: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -24,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         }, 
         owner: {
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
        

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const validateSession = require('../Middleware/validateSession');
-const Blog = require('../db').import('../Models/blogModel');
+const Workout = require('../db').import('../Models/workoutModel');
 
 //not all endpoints below are admin only
 
@@ -10,26 +10,26 @@ NOW ENTERING ENDPOINT TERRITORY
 ********************************/
 
 //CREATE
-////ADD NEW BLOG
-router.post('/newblog', validateSession, (req, res) => {
+////ADD NEW WORKOUT
+router.post('/newworkout', validateSession, (req, res) => {
 
     if (req.user.isAdmin == true) {
 
-        const blogArticle = {
-            category: req.body.blog.category,
-            title: req.body.blog.title,
-            subtitle: req.body.blog.subtitle,
-            pubDate: req.body.blog.pubDate,
-            contentBody: req.body.blog.contentBody,
-            owner: req.user.id,
+        const workoutEntry = {
+            workoutIntention: req.body.workout.workoutIntention,
+            workoutTitle: req.body.workout.workoutTile,
+            workoutContent: req.body.workout.workoutContent,
+            workoutGuidance: req.body.workout.workoutGuidance,
+            workoutPubDate: req.body.workout.workoutPubDate,
+            workoutOwner: req.user.id, //.toString() worked again
         }
 
-        Blog.create(blogArticle)
-            .then((blog) => res.status(200).json(blog))
+        Workout.create(workoutEntry)
+            .then((workout) => res.status(200).json(workout))
             .catch((err) => res.status(500).json({ error: err }))
 
     } else {
-        res.status(403).json({ error: 'User is not authorized to add new blogs.' })
+        res.status(403).json({ error: 'User is not authorized to add new workouts.' })
     }
 }) //END ADD NEW BLOG (CREATE)
 

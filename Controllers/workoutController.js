@@ -17,7 +17,7 @@ router.post('/newworkout', validateSession, (req, res) => {
 
         const workoutEntry = {
             workoutIntention: req.body.workout.workoutIntention,
-            workoutTitle: req.body.workout.workoutTile,
+            workoutTitle: req.body.workout.workoutTitle,
             workoutContent: req.body.workout.workoutContent,
             workoutGuidance: req.body.workout.workoutGuidance,
             workoutPubDate: req.body.workout.workoutPubDate,

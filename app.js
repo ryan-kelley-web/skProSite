@@ -10,9 +10,9 @@ let workout = require('./Controllers/workoutController');
 
 //SEQUELIZE REQUIREMENT
 //*in case of emergency use FORCE:TRUE to reset db tables*
-// sequelize.sync();
+sequelize.sync();
 /////////////////////////////////////
-sequelize.sync( { force: true } );
+// sequelize.sync( { force: true } );
 /////////////////////////////////////
 
 //MIDDLEWARE FUNCTION 

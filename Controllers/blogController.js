@@ -15,16 +15,16 @@ router.post('/newblog', validateSession, (req, res) => {
 
     if (req.user.isAdmin == true) {
 
-        const blogArticle = {
-            category: req.body.blog.category,
-            title: req.body.blog.title,
-            subtitle: req.body.blog.subtitle,
-            pubDate: req.body.blog.pubDate,
-            contentBody: req.body.blog.contentBody,
-            owner: req.user.id,
+        const newBlogEntry = {
+            blogCategory: req.body.blog.blogCategory,
+            blogTitle: req.body.blog.blogTitle,
+            blogSubtitle: req.body.blog.blogSubtitle,
+            blogPubDate: req.body.blog.blogPubDate,
+            blogItself: req.body.blog.blogItself,
+            blogAuthor: req.user.id,
         }
 
-        Blog.create(blogArticle)
+        Blog.create(newBlogEntry)
             .then((blog) => res.status(200).json(blog))
             .catch((err) => res.status(500).json({ error: err }))
 
@@ -49,18 +49,22 @@ router.put('/editblog/:blogId', validateSession, function (req, res) {
 
     if (req.user.isAdmin == true) {
 
-        const editBlog = {
-            category: req.body.blog.category,
-            title: req.body.blog.title,
-            subtitle: req.body.blog.subtitle,
-            pubDate: req.body.blog.pubDate,
-            contentBody: req.body.blog.contentBody,
-            owner: req.user.id,
+        const revisedBlogEntry = {
+            blogCategory: req.body.blog.blogCategory,
+            blogTitle: req.body.blog.blogTitle,
+            blogSubtitle: req.body.blog.blogSubtitle,
+            blogPubDate: req.body.blog.blogPubDate,
+            blogItself: req.body.blog.blogItself,
+            blogAuthor: req.user.id,
         }
 
-        const query = { where: { id: req.params.blogId, owner: req.user.id } };
+        const query = {
+            where: {
+                id: req.params.blogId, //blogAuthor: req.user.id
+            }
+        };
 
-        Blog.update(editBlog, query)
+        Blog.update(revisedBlogEntry, query)
             .then((blogs) => res.status(200).json(blogs))
             .catch((err) => res.status(500).json({ error: err }))
 
@@ -75,7 +79,12 @@ router.delete('/deleteblog/:blogId', validateSession, function (req, res) {
 
     if (req.user.isAdmin == true) {
 
-        const query = { where: { id: req.params.blogId, owner: req.user.id } }
+        const query = {
+            where: {
+                id: req.params.blogId,
+                blogAuthor: req.user.id
+            }
+        }
         //.toString()--should not need so long as owner is integer
 
         Blog.destroy(query)

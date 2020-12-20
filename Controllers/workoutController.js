@@ -15,16 +15,16 @@ router.post('/newworkout', validateSession, (req, res) => {
 
     if (req.user.isAdmin == true) {
 
-        const workoutEntry = {
+        const newWorkoutEntry = {
             workoutIntention: req.body.workout.workoutIntention,
             workoutTitle: req.body.workout.workoutTitle,
-            workoutContent: req.body.workout.workoutContent,
+            workoutItself: req.body.workout.workoutItself,
             workoutGuidance: req.body.workout.workoutGuidance,
             workoutPubDate: req.body.workout.workoutPubDate,
-            workoutOwner: req.user.id, //.toString() worked again
+            workoutAuthor: req.user.id, //.toString() worked again
         }
 
-        Workout.create(workoutEntry)
+        Workout.create(newWorkoutEntry)
             .then((workout) => res.status(200).json(workout))
             .catch((err) => res.status(500).json({ error: err }))
 
@@ -52,10 +52,10 @@ router.put('/editworkout/:workoutId', validateSession, function (req, res) {
         const revisedWorkoutEntry = {
             workoutIntention: req.body.workout.workoutIntention,
             workoutTitle: req.body.workout.workoutTitle,
-            workoutContent: req.body.workout.workoutContent,
+            workoutItself: req.body.workout.workoutItself,
             workoutGuidance: req.body.workout.workoutGuidance,
             workoutPubDate: req.body.workout.workoutPubDate,
-            workoutOwner: req.user.id,
+            workoutAuthor: req.user.id,
         }
 
         const query = { where: { id: req.params.workoutId } }; //owner not working again but .toString() not helping----QQQ
@@ -75,7 +75,12 @@ router.delete('/deleteworkout/:workoutId', validateSession, function (req, res) 
 
     if (req.user.isAdmin == true) {
 
-        const query = { where: { id: req.params.workoutId } } //owner?----QQQ
+        const query = { 
+            where: { 
+                id: req.params.workoutId, 
+                workoutAuthor: req.user.id 
+            } 
+        } //owner?----QQQ
         //.toString()--should not need so long as owner is integer
 
         Workout.destroy(query)

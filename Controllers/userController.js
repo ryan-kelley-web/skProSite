@@ -16,12 +16,12 @@ router.post('/register', function (req, res) {
 
     User.create(
         {
-            name: req.body.user.name,
+            // name: req.body.user.name,  
             email: req.body.user.email,
             password: bcrypt.hashSync(req.body.user.password, 13),
             // password: req.body.user.password,-------superceded by code above
-            tagline: req.body.user.tagline,
-            theWhy: req.body.user.theWhy,
+            // tagline: req.body.user.tagline,
+            // theWhy: req.body.user.theWhy,
             isAdmin: req.body.user.isAdmin,
         }
     )
@@ -116,12 +116,12 @@ router.get('/allusers', validateSession, (req, res) => {
 router.put('/editprofile/:userId', validateSession, function (req, res) {
 
     const editProfile = {
-        name: req.body.user.name,
-        // email: req.body.user.email,//----not editing email
+        // name: req.body.user.name,
+        email: req.body.user.email,//----not editing email
         // password: bcrypt.hashSync(req.body.user.password, 13),----not editing pword
         // password: req.body.user.password,----superceded by code above
-        tagline: req.body.user.tagline,
-        theWhy: req.body.user.theWhy,
+        // tagline: req.body.user.tagline,
+        // theWhy: req.body.user.theWhy,
         isAdmin: req.body.user.isAdmin,
     }
 

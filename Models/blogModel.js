@@ -1,39 +1,33 @@
 module.exports = (sequelize, DataTypes) => {
     const Blog = sequelize.define('blog', {
 
-        category: {
+        blogCategory: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        blogTitle: {
             type: DataTypes.STRING,
             allowNull: false,
+            unique: true
         },
-        title: {
+        blogSubtitle: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true,
+            unique: true
         },
-        subtitle: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            unique: true,
-        },
-        pubDate: {
-            type: DataTypes.STRING,
+        blogPubDate: {
+            type: DataTypes.DATEONLY,
             //how can I tie this to the db's createdAt col? QQQ
-            allowNull: false,
+            allowNull: false
         }, 
-        contentBody: {
+        blogItself: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: false
         }, 
-        owner: {
+        blogAuthor: {
             type: DataTypes.INTEGER,
-            allowNull: false,
-        },
-       
-
-
-
-        //STRETCH?
-        //QQQ------instead of pubDate, could I make pubDt, pubMo, pubYr, setting DataTypes as num, str, num respectively?
+            allowNull: false
+        }
 
     })
     return Blog;

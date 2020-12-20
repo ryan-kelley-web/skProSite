@@ -8,19 +8,19 @@ module.exports = (sequelize, DataTypes) => {
         workoutTitle: {
             type:DataTypes.STRING
         },
-        workoutContent: { 
+        workoutItself: { 
             type: DataTypes.STRING 
         },
         workoutGuidance: { 
             type: DataTypes.STRING 
         },
         workoutPubDate: {
-            type: DataTypes.STRING,
-            allowNull: false,
+            type: DataTypes.DATEONLY,
+            allowNull: false
         },
-        workoutOwner: {
+        workoutAuthor: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: false
         }
     })
     return Workout;

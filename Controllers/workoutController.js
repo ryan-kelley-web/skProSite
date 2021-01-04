@@ -5,10 +5,6 @@ const Workout = require('../db').import('../Models/workoutModel');
 
 //not all endpoints below are admin only
 
-/*******************************
-NOW ENTERING ENDPOINT TERRITORY
-********************************/
-
 //CREATE
 ////ADD NEW WORKOUT
 router.post('/newworkout', validateSession, (req, res) => {

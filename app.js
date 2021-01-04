@@ -1,18 +1,19 @@
 require('dotenv').config();
 let express = require('express');
 let app = express();
-let sequelize = require('./db');
+let database = require('./db');
 
 //CONTROLLER IMPORT VARIABLES (see also controller routes)
 let blog = require('./Controllers/blogController');
 let user = require('./Controllers/userController');
 let workout = require('./Controllers/workoutController');
+let profile = require('./Controllers/profileController');
 
 //SEQUELIZE REQUIREMENT
-//*in case of emergency use FORCE:TRUE to reset db tables*
-sequelize.sync();
+////*in case of emergency use FORCE:TRUE to reset db tables*
+// database.sync();
 /////////////////////////////////////
-// sequelize.sync( { force: true } );
+database.sync( { force: true } );
 /////////////////////////////////////
 
 //MIDDLEWARE FUNCTION 
@@ -25,6 +26,7 @@ app.use(express.json());
 app.use('/blog', blog);
 app.use('/user', user);
 app.use('/workout', workout);
+app.use('/profile', profile);
 ////////////////////////////////////////
 // Example Route:
 //  app.use('/test', function(req, res){

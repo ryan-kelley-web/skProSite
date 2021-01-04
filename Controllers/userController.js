@@ -1,14 +1,10 @@
 const router = require('express').Router(); //alt way of importing express and
 //accessing .Router() method, declared as var router
 const User = require('../db').import('../models/userModel');
+const Profile = require('../db').import('../models/profileModel');
 const validateSession = require('../Middleware/validateSession');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-
-/******************************* 
- NOW ENTERING ENDPOINT TERRITORY
-********************************/
-
 
 //CREATE
 ////USER REGISTRATION
@@ -16,12 +12,10 @@ router.post('/register', function (req, res) {
 
     User.create(
         {
-            // name: req.body.user.name,  
+            name: req.body.user.name,
             email: req.body.user.email,
             password: bcrypt.hashSync(req.body.user.password, 13),
             // password: req.body.user.password,-------superceded by code above
-            // tagline: req.body.user.tagline,
-            // theWhy: req.body.user.theWhy,
             isAdmin: req.body.user.isAdmin,
         }
     )
@@ -31,7 +25,7 @@ router.post('/register', function (req, res) {
             function createSuccess(user) {
                 let token = jwt.sign(
                     //.sign() is token-creating jwt method
-                    //.sign(param1 = payload, param2 = signature, param3 = specific options or callback func)
+                    //.sign(payload, signature, specific options or callback func)----params
                     { id: user.id, email: user.email },
                     process.env.JWT_SECRET,
                     { expiresIn: 60 * 90 }
@@ -52,8 +46,7 @@ router.post('/register', function (req, res) {
         )
 }) //END USER REGISTRATION
 
-
-//NOT CRUD?
+//"CREATE"
 ////USER LOGIN
 router.post('/login', function (req, res) {
 
@@ -113,10 +106,10 @@ router.get('/allusers', validateSession, (req, res) => {
 
 //UPDATE
 ////EDIT PROFILE *can only edit name, tag, why*
-router.put('/editprofile/:userId', validateSession, function (req, res) {
+router.put('/edituser/:userId', validateSession, function (req, res) {
 
     const editProfile = {
-        // name: req.body.user.name,
+        name: req.body.user.name,
         email: req.body.user.email,//----not editing email
         // password: bcrypt.hashSync(req.body.user.password, 13),----not editing pword
         // password: req.body.user.password,----superceded by code above
@@ -136,24 +129,18 @@ router.put('/editprofile/:userId', validateSession, function (req, res) {
 ////DELETE USER *admin only*
 router.delete('/deleteuser/:userId', validateSession, function (req, res) {
 
-    if(req.user.isAdmin == true) {
+    if (req.user.isAdmin == true) {
 
-        const query = {where: {id: req.params.userId}}
+        const query = { where: { id: req.params.userId } }
 
         User.destroy(query)
-        .then(()=> res.status(200).json({message: 'User has been deleted.'}))
-        .catch((err)=> res.status(500).json({error: err}))
+            .then(() => res.status(200).json({ message: 'User has been deleted.' }))
+            .catch((err) => res.status(500).json({ error: err }))
     } else {
-        res.status(403).json({error: 'User is not authorized to delete other users.'})
+        res.status(403).json({ error: 'User is not authorized to delete other users.' })
     }
-
 })
 
-module.exports = router;
 
-//from app.js----------what is the reason this example route was demo'd in app.js? why not demo in a controller? QQQ
-//EXAMPLE ROUTE
-//(param1 = path, param2 = callback func, invoked when skProSite gets an http req hit while listening)
-// app.use('/test', function(req, res){
-//     res.send('This is a msg from test endpoint on the server.')
-// })
+
+module.exports = router;

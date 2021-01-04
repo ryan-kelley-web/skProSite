@@ -5,10 +5,6 @@ const Blog = require('../db').import('../Models/blogModel');
 
 //not all endpoints below are admin only
 
-/*******************************
-NOW ENTERING ENDPOINT TERRITORY
-********************************/
-
 //CREATE
 ////ADD NEW BLOG
 router.post('/newblog', validateSession, (req, res) => {
@@ -82,7 +78,7 @@ router.delete('/deleteblog/:blogId', validateSession, function (req, res) {
         const query = {
             where: {
                 id: req.params.blogId,
-                blogAuthor: req.user.id
+                blogAuthor: req.user.id, 
             }
         }
         //.toString()--should not need so long as owner is integer

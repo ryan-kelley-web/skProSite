@@ -1,7 +1,7 @@
 const router = require('express').Router(); //alt way of importing express and
 //accessing .Router() method, declared as var router
-const User = require('../db').import('../models/userModel');
-const Profile = require('../db').import('../models/profileModel');
+const User = require('../db').import('../Models/userModel');
+const Profile = require('../db').import('../Models/profileModel');
 const validateSession = require('../Middleware/validateSession');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
@@ -104,11 +104,11 @@ router.get('/allusers', validateSession, (req, res) => {
     }
 })  //END DISPLAY ALL USERS (READ)
 
-//UPDATE
-////EDIT PROFILE *can only edit name, tag, why*
+//PUT
+////EDIT USER
 router.put('/edituser/:userId', validateSession, function (req, res) {
 
-    const editProfile = {
+    const editUser = {
         name: req.body.user.name,
         email: req.body.user.email,//----not editing email
         // password: bcrypt.hashSync(req.body.user.password, 13),----not editing pword
@@ -120,10 +120,10 @@ router.put('/edituser/:userId', validateSession, function (req, res) {
 
     const query = { where: { id: req.params.userId } };
 
-    User.update(editProfile, query)
+    User.update(editUser, query)
         .then((users) => res.status(200).json(users))
         .catch((err) => res.status(500).json({ error: err }))
-}) //END EDIT BLOG (UPDATE)
+}) 
 
 //DELETE
 ////DELETE USER *admin only*

@@ -11,13 +11,14 @@ let profile = require('./Controllers/profileController');
 
 //SEQUELIZE REQUIREMENT
 ////*in case of emergency use FORCE:TRUE to reset db tables*
-// database.sync();
+database.sync();
 /////////////////////////////////////
-database.sync( { force: true } );
+// database.sync( { force: true } );
 /////////////////////////////////////
 
 //MIDDLEWARE FUNCTION 
 //*must stay above routes*
+app.use(require("./Middleware/headers"));
 app.use(express.json());
 //allows use of req.body middleware as provided by Express (see userController.js)
 //Express jsonifies the req and interprets the body data
@@ -48,6 +49,6 @@ app.use('/profile', profile);
 //(see blogController.js)
 
 //SKPROSITE SERVER SOCKET
-app.listen(3000, function () {
+app.listen(process.env.PORT, function () {
     console.log('skProSite is listening on Port 3000');
 })

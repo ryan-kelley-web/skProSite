@@ -10,14 +10,14 @@ database.authenticate()
     .catch((err) => console.log(err))
 
 //MODELS IMPORT
-const User = database.import('./models/userModel');
-const Blog = database.import('./models/blogModel');
-const Workout = database.import('./models/workoutModel');
-const Profile = database.import('./models/profileModel');
+const User = database.import('./Models/userModel');
+const Blog = database.import('./Models/blogModel');
+const Workout = database.import('./Models/workoutModel');
+const Profile = database.import('./Models/profileModel');
 
 //DB ASSOCIATIONS
 ////1:1
-User.hasOne(Profile, {as: "prof"})
-Profile.belongsTo(User, {as: "prof"})
+User.hasOne(Profile)
+Profile.belongsTo(User)
 
 module.exports = database;

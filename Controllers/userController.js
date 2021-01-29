@@ -52,7 +52,7 @@ router.post('/login', function (req, res) {
 
     User.findOne(
         //.findOne() method is sequelize data retrieval func
-        { where: { email: req.body.user.email } }
+        { where: { email: req.body.user.email }, include: "profile"}
         //where is sequelize object that tells db to look for something with matching properties
     )
         .then(
@@ -104,6 +104,17 @@ router.get('/allusers', validateSession, (req, res) => {
     }
 })  //END DISPLAY ALL USERS (READ)
 
+//DISPLAY SINGLE USER (ON SKDASH)
+router.get('/singleuser', validateSession, (req, res) => {
+    User.findOne( {
+        where: { 
+            id: req.user.id
+        }, include: "profile"
+
+    })
+    .then((userProfile) => res.status(200).json(userProfile))
+    .catch((err) => res.status(500).json({error: err}))
+})
 //PUT
 ////EDIT USER
 router.put('/edituser/:userId', validateSession, function (req, res) {

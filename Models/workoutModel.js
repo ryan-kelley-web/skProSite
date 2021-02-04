@@ -15,11 +15,11 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING 
         },
         workoutPubDate: {
-            type: DataTypes.DATEONLY,
+            type: DataTypes.STRING,
             allowNull: false
         },
         workoutAuthor: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false
         }
     })

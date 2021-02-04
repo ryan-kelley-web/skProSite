@@ -9,7 +9,7 @@ const Workout = require('../db').import('../Models/workoutModel');
 ////ADD NEW WORKOUT
 router.post('/newworkout', validateSession, (req, res) => {
 
-    if (req.user.isAdmin == true) {
+    // if (req.user.isAdmin == true) {
 
         const newWorkoutEntry = {
             workoutIntention: req.body.workout.workoutIntention,
@@ -24,10 +24,13 @@ router.post('/newworkout', validateSession, (req, res) => {
             .then((workout) => res.status(200).json(workout))
             .catch((err) => res.status(500).json({ error: err }))
 
-    } else {
-        res.status(403).json({ error: 'User not authorized to add new workouts.' })
-    }
-}) //END ADD NEW WORKOUT (CREATE)
+    } 
+    // else {
+
+    //     res.status(403).json({ error: 'User not authorized to add new workouts.' })
+    // }
+// }
+) //END ADD NEW WORKOUT (CREATE)
 
 //READ
 ////SEE ALL WORKOUTS
@@ -38,6 +41,17 @@ router.get('/allworkouts', (req, res) => {
         .then((workouts) => res.status(200).json(workouts))
         .catch((err) => res.status(500).json({ error: err }))
 }) //END SEE ALL WORKOUTS (READ)
+
+//SEE SINGLE WORKOUT
+router.get('/viewworkout/:workoutId', validateSession, (req, res) =>{
+    Workout.findOne({
+        where: {
+            id: req.params.workoutId
+        }
+    })
+    .then((singleWkt) => res.status(200).json(singleWkt))
+    .catch((err)=> res.status(500).json({error: err}))
+})
 
 //UPDATE
 ////EDIT WORKOUT
